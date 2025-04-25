@@ -127,6 +127,16 @@ O verdadeiro poder dessa metodologia, como sintetiza Rubin (2012), revela-se qua
 
 *Posicione também o modelo físico com o Schema do BD (arquivo .sql)*
 
+<div style="text-align: center; margin-bottom: 1em;">
+    <p style="margin-bottom: 0.3em; font-style: italic;"><strong>Figura 1</strong> – Representação do diagrama de modelos relacionais</p>
+    <img src="assets/diagramaesquema.png" style="max-width: 100%; height: auto; margin: 0.5em 0;">
+    <p style="margin-top: 0.3em; font-size: 0.9em; font-style: italic;">
+        Fonte:Produção Autoral.
+    </p>
+</div>
+
+#
+
 ### 3.1.1 BD e Models (Semana 5)
 *Descreva aqui os Models implementados no sistema web*
 
