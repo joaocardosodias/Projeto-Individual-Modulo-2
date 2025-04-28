@@ -23,7 +23,6 @@ O atual processo de reserva de salas no Inteli exige que alunos e professores se
 
 Este projeto propõe uma solução digital para simplificar e modernizar o processo de reserva. A plataforma permitirá que os usuários consultem a disponibilidade das salas em tempo real, realizem agendamentos de forma rápida e gerenciem suas reservas conforme a necessidade. Com uma interface intuitiva, será possível visualizar os horários livres, selecionar o espaço desejado e receber confirmação imediata, tudo de maneira autônoma e sem burocracia.
 
-Para a secretaria, o sistema oferecerá uma visão unificada de todos os agendamentos, facilitando a organização dos espaços e a resolução de eventuais conflitos. A ferramenta também poderá gerar relatórios de uso, ajudando na otimização dos recursos físicos disponíveis.
 
 O objetivo principal é tornar o processo mais eficiente, eliminando barreiras desnecessárias e proporcionando maior autonomia aos usuários. Ao substituir o método manual por uma solução digital, o Inteli dará um passo importante na modernização de seus processos internos, alinhando-se às necessidades de sua comunidade acadêmica. A plataforma não apenas resolverá problemas imediatos, como também servirá como base para futuras melhorias na gestão de espaços e recursos compartilhados.
 
@@ -60,7 +59,7 @@ O verdadeiro poder dessa metodologia, como sintetiza Rubin (2012), revela-se qua
 |-----------------|---------------------------------------------------------------------------|
 | **ID**         | US01                                                                     |
 | **Título**     | Visualização de disponibilidade                                          |
-| **Persona**    | Lucas Mendes (aluno do 3° período)                                      |
+| **Persona**    | Rafael Souza (aluno do 3° período)                                      |
 | **Como**       | Aluno que precisa agendar salas para trabalhos em grupo                 |
 | **Quero**      | Ver disponibilidade das salas em tempo real                             |
 | **Para**       | Planejar meus estudos sem precisar ir à secretaria                      |
@@ -98,7 +97,7 @@ O verdadeiro poder dessa metodologia, como sintetiza Rubin (2012), revela-se qua
 |---------------------|---------------------------------------------------------------------------|
 | **ID**              | US02                                                                     |
 | **Título**          | Reserva rápida                                                           |
-| **Persona**         | Lucas Mendes (com prazo apertado)                                        |
+| **Persona**         | Rafael Souza (com prazo apertado)                                        |
 | **Como**            | Aluno precisando agendar sala urgentemente                               |
 | **Quero**           | Reservar uma sala em poucos passos pelo celular                          |
 | **Para**            | Não perder tempo com deslocamento até a secretaria                       |
@@ -109,7 +108,7 @@ O verdadeiro poder dessa metodologia, como sintetiza Rubin (2012), revela-se qua
 |---------------------|---------------------------------------------------------------------------|
 | **ID**              | US03                                                                     |
 | **Título**          | Gerenciamento de reservas                                                |
-| **Persona**         | Lucas Mendes (com planos alterados)                                      |
+| **Persona**         | Rafael Souza (com planos alterados)                                      |
 | **Como**            | Aluno que precisa reorganizar agendas                                    |
 | **Quero**           | Cancelar ou modificar minhas reservas existentes                         |
 | **Para**            | Me adaptar a mudanças no cronograma do grupo                             |
@@ -125,7 +124,7 @@ O verdadeiro poder dessa metodologia, como sintetiza Rubin (2012), revela-se qua
 *Posicione também o modelo físico com o Schema do BD (arquivo .sql)*
 
 <div style="text-align: center; margin-bottom: 1em;">
-    <p style="margin-bottom: 0.3em; font-style: italic;"><strong>Figura 1</strong> – Representação do diagrama de modelos relacionais</p>
+    <p style="margin-bottom: 0.3em; font-style: italic;"><strong>Figura 2</strong> – Representação do diagrama de modelos relacionais</p>
     <img src="assets/diagramaesquema.png" style="max-width: 100%; height: auto; margin: 0.5em 0;">
     <p style="margin-top: 0.3em; font-size: 0.9em; font-style: italic;">
         Fonte:Produção Autoral.
