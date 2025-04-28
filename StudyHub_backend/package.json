@@ -1,0 +1,25 @@
+{
+  "name": "projeto-individual-m-dulo-2",
+  "version": "1.0.0",
+  "description": "Projeto Individual-Módulo 2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaocardosodias/Projeto-Individual-Modulo-2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joaocardosodias/Projeto-Individual-Modulo-2/issues"
+  },
+  "homepage": "https://github.com/joaocardosodias/Projeto-Individual-Modulo-2#readme",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "pg": "^8.15.6"
+  }
+}
