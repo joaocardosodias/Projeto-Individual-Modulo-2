@@ -39,16 +39,13 @@ Essa materialização das personas ganha ainda mais relevância quando considera
 A eficácia desse método encontra sua comprovação nos estudos de Nielsen (2012), que correlaciona diretamente o uso de personas bem construídas com a qualidade final da experiência do usuário. No caso do Inteli, essa relação tornou-se visível quando o sistema em desenvolvimento começou a antecipar necessidades que nem mesmo os próprios alunos haviam verbalizado claramente - como a funcionalidade de "reserva relâmpago" para intervalos curtos entre aulas, inspirada na análise minuciosa dos padrões de comportamento da persona Lucas. Assim, o que começou como uma ferramenta de design transformou-se no próprio mecanismo que assegurou a adesão espontânea dos usuários ao novo sistema.
 
 ---
-
-| Campo           | Descrição                                                                 |
-|-----------------|---------------------------------------------------------------------------|
-| **Nome**        | Lucas Mendes                                                              |
-| **Idade**       | 22 anos                                                                   |
-| **Perfil**      | Aluno do 3° período de Engenharia de Computação no Inteli                 |
-| **Objetivos**   | - Ter autonomia para agendar salas<br>- Evitar processos manuais<br>- Garantir espaço para grupos |
-| **Frustrações** | - Horário limitado da secretaria<br>- Dificuldade em ver disponibilidade  |
-| **Comportamento** | - Usa smartphone para tudo<br>- Prefere autoatendimento  <br>- Agenda de última hora                |
-| **Tecnologia**  | - Domina apps móveis<br>- Prefere interfaces simples                     |
+<div style="text-align: center; margin-bottom: 1em;">
+    <p style="margin-bottom: 0.3em; font-style: italic;"><strong>Figura 1</strong> – Representação de uma persona
+    <img src="assets/personas.png" style="max-width: 100%; height: auto; margin: 0.5em 0;">
+    <p style="margin-top: 0.3em; font-size: 0.9em; font-style: italic;">
+        Fonte:Produção Autoral.
+    </p>
+</div>
 
 ### 2.2. User Stories (Semana 01)
 
