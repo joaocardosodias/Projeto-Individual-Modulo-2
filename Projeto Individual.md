@@ -67,22 +67,6 @@ O verdadeiro poder dessa metodologia, como sintetiza Rubin (2012), revela-se qua
 | **Prioridade** | Alta (Core do MVP)                                                      |
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 | Atributo INVEST | Aplicação na US01                                                                 | Justificativa                                                                 |
 |-----------------|-----------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
 | **I**ndependente | Funcionalidade completa que não depende de outras US para funcionar                | Pode ser implementada mesmo sem o sistema de reserva estar completo           |
@@ -214,8 +198,18 @@ FOR EACH ROW EXECUTE FUNCTION update_timestamp();
 
 ### 3.3. Wireframes (Semana 03)
 
-*Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização).*
+Wireframes são representações visuais simplificadas da estrutura de uma interface, geralmente utilizadas nas etapas iniciais do design de produtos digitais. Eles descrevem o layout de uma página sem se preocupar com detalhes estéticos, focando apenas na organização dos elementos e na hierarquia da informação. Segundo Garrett (2011), os wireframes são essenciais para mapear como o usuário interage com o sistema, permitindo antecipar problemas de usabilidade e otimizar a navegação.
 
+A principal importância dos wireframes está na sua capacidade de facilitar a comunicação entre designers, desenvolvedores e stakeholders. Eles funcionam como um guia visual que alinha expectativas e reduz retrabalho, permitindo validar a lógica e o fluxo das interfaces antes da implementação técnica (Krug, 2014). Além disso, wireframes servem como uma base para testes iniciais de usabilidade e feedback de usuários, contribuindo para soluções mais eficientes e centradas no usuário.
+
+
+<div style="text-align: center; margin-bottom: 1em;">
+    <p style="margin-bottom: 0.3em; font-style: italic;"><strong>Figura 3</strong> – Representação do  Wireframe</p>
+    <img src="assets/wireframe.png" style="max-width: 100%; height: auto; margin: 0.5em 0;">
+    <p style="margin-top: 0.3em; font-size: 0.9em; font-style: italic;">
+        Fonte:Produção Autoral.
+    </p>
+</div>
 ### 3.4. Guia de estilos (Semana 05)
 
 *Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução.*
@@ -262,6 +256,9 @@ NIELSEN, J. *Usability engineering*. San Francisco: Morgan Kaufmann, 2012.
 PRUITT, J.; ADLIN, T. *The persona lifecycle: keeping people in mind throughout product design*. San Francisco: Morgan Kaufmann, 2006.
 
 RUBIN, K. S. *Essential Scrum: a practical guide to the most popular agile process*. Boston: Addison-Wesley, 2012.
+Garrett, J. J. (2011). The Elements of User Experience: User-Centered Design for the Web and Beyond. New Riders.
+
+Krug, S. (2014). Don't Make Me Think, Revisited: A Common Sense Approach to Web Usability. New Riders.
 
 
 ---
