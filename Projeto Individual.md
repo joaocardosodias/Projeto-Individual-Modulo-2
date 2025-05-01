@@ -103,9 +103,6 @@ O verdadeiro poder dessa metodologia, como sintetiza Rubin (2012), revela-se qua
 
 ### 3.1. Modelagem do banco de dados  (Semana 3)
 
-*Posicione aqui os diagramas de modelos relacionais do seu banco de dados, apresentando todos os esquemas de tabelas e suas relações. Utilize texto para complementar suas explicações, se necessário.*
-
-*Posicione também o modelo físico com o Schema do BD (arquivo .sql)*
 
 <div style="text-align: center; margin-bottom: 1em;">
     <p style="margin-bottom: 0.3em; font-style: italic;"><strong>Figura 2</strong> – Representação do diagrama de modelos relacionais</p>
@@ -117,66 +114,42 @@ O verdadeiro poder dessa metodologia, como sintetiza Rubin (2012), revela-se qua
 
 
 ```sql
-CREATE TABLE USUARIOS (
-    ID_USUARIO SERIAL PRIMARY KEY,
-    NOME VARCHAR(100) NOT NULL,
-    EMAIL VARCHAR(100) UNIQUE NOT NULL,
-    SENHA VARCHAR(255) NOT NULL,
-    CARGO VARCHAR(10) CHECK (CARGO IN ('admin', 'aluno')) DEFAULT 'aluno',
-    MATRICULA VARCHAR(20) UNIQUE NOT NULL,
-    CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UPDATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- Cria a tabela de usuários do sistema (alunos)
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,                          -- Identificador único automático para cada usuário
+    nome VARCHAR(100) NOT NULL,                     -- Nome do aluno
+    email VARCHAR(100) UNIQUE NOT NULL,             -- E-mail único para login
+    senha_hash TEXT NOT NULL                        -- Senha armazenada de forma segura (hash)
 );
 
-
-CREATE OR REPLACE FUNCTION update_timestamp()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.UPDATED_AT = CURRENT_TIMESTAMP;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER update_usuarios_timestamp
-BEFORE UPDATE ON USUARIOS
-FOR EACH ROW EXECUTE FUNCTION update_timestamp();
-
-
-CREATE TABLE SALAS (
-    ID_SALA SERIAL PRIMARY KEY,
-    NOME VARCHAR(5) NOT NULL UNIQUE,
-    LOCALIZACAO VARCHAR(100) NOT NULL,
-    STATUS_SALA VARCHAR(12) CHECK (STATUS IN ('disponivel', 'indisponivel')) DEFAULT 'indisponivel',
-    CAPACIDADE VARCHAR(5) NOT NULL,
-    CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UPDATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- Cria a tabela de salas disponíveis para reserva
+CREATE TABLE salas (
+    id SERIAL PRIMARY KEY,                          -- ID único da sala
+    codigo VARCHAR(10) UNIQUE NOT NULL              -- Código da sala (ex: R01, R02...) - não pode se repetir
 );
 
-COMMENT ON COLUMN SALAS.CAPACIDADE IS 'Número de lugares ou tamanho (S/M/L)';
-
-CREATE TRIGGER update_salas_timestamp
-BEFORE UPDATE ON SALAS
-FOR EACH ROW EXECUTE FUNCTION update_timestamp();
-
-
-CREATE TABLE RESERVAS (
-    ID_RESERVA SERIAL PRIMARY KEY,
-    ID_SALA INTEGER NOT NULL REFERENCES SALAS(ID_SALA) ON DELETE CASCADE,
-    ID_USUARIO INTEGER NOT NULL REFERENCES USUARIOS(ID_USUARIO) ON DELETE CASCADE,
-    DATA_INICIO DATE NOT NULL,
-    DATA_FIM DATE NOT NULL,
-    HORA_INICIO TIME NOT NULL,
-    HORA_FIM TIME NOT NULL,
-    STATUS_RESERVA VARCHAR(10) CHECK (STATUS IN ('pendente', 'confirmada', 'cancelada', 'concluida')) DEFAULT 'pendente',
-    CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UPDATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT chk_data_valida CHECK (DATA_FIM >= DATA_INICIO),
-    CONSTRAINT chk_horario_valido CHECK (HORA_FIM > HORA_INICIO)
+-- Cria os blocos de horário fixos disponíveis para reserva
+CREATE TABLE blocos_horario (
+    id SERIAL PRIMARY KEY,                          -- ID do bloco de horário
+    hora_inicio TIME NOT NULL,                      -- Horário de início do bloco (ex: 08:00)
+    hora_fim TIME NOT NULL                          -- Horário de término do bloco (ex: 10:00)
 );
 
-CREATE TRIGGER update_reservas_timestamp
-BEFORE UPDATE ON RESERVAS
-FOR EACH ROW EXECUTE FUNCTION update_timestamp();
+-- Cria a tabela de reservas feitas pelos alunos
+CREATE TABLE reservas (
+    id SERIAL PRIMARY KEY,                          -- ID único da reserva
+    usuario_id INTEGER REFERENCES usuarios(id)      -- Referência ao aluno que fez a reserva
+              ON DELETE CASCADE,                    -- Se o usuário for deletado, a reserva também será
+    sala_id INTEGER REFERENCES salas(id)            -- Referência à sala reservada
+            ON DELETE CASCADE,                      -- Se a sala for deletada, a reserva também será
+    data_reserva DATE NOT NULL,                     -- Data da reserva (ex: 2025-05-01)
+    bloco_id INTEGER REFERENCES blocos_horario(id)  -- Referência ao horário reservado
+             ON DELETE CASCADE,                     -- Se o bloco for deletado, a reserva também será
+    status VARCHAR(20) DEFAULT 'ativa',             -- Status da reserva (ativa, cancelada, etc.)
+    
+    -- Garante que não haverá duas reservas para a mesma sala, data e horário
+    CONSTRAINT reserva_unica_por_bloco UNIQUE (sala_id, data_reserva, bloco_id)
+);
 ```
 
 
