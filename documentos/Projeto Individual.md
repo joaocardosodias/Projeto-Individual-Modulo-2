@@ -106,7 +106,7 @@ O verdadeiro poder dessa metodologia, como sintetiza Rubin (2012), revela-se qua
 
 <div style="text-align: center; margin-bottom: 1em;">
     <p style="margin-bottom: 0.3em; font-style: italic;"><strong>Figura 2</strong> – Representação do diagrama de modelos relacionais</p>
-    <img src="assets/diagramaesquema.png" style="max-width: 100%; height: auto; margin: 0.5em 0;">
+    <img src="../assets/diagramaesquema.png" style="max-width: 100%; height: auto; margin: 0.5em 0;">
     <p style="margin-top: 0.3em; font-size: 0.9em; font-style: italic;">
         Fonte:Produção Autoral.
     </p>
@@ -178,7 +178,7 @@ A principal importância dos wireframes está na sua capacidade de facilitar a c
 
 <div style="text-align: center; margin-bottom: 1em;">
     <p style="margin-bottom: 0.3em; font-style: italic;"><strong>Figura 3</strong> – Representação do  Wireframe</p>
-    <img src="assets/wireframe.png" style="max-width: 100%; height: auto; margin: 0.5em 0;">
+    <img src="../assets/wireframe.png" style="max-width: 100%; height: auto; margin: 0.5em 0;">
     <p style="margin-top: 0.3em; font-size: 0.9em; font-style: italic;">
         Fonte:Produção Autoral.
     </p>
