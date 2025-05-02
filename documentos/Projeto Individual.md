@@ -40,7 +40,7 @@ A eficácia desse método encontra sua comprovação nos estudos de Nielsen (201
 ---
 <div style="text-align: center; margin-bottom: 1em;">
     <p style="margin-bottom: 0.3em; font-style: italic;"><strong>Figura 1</strong> – Representação de uma persona
-    <img src="assets/personas.png" style="max-width: 100%; height: auto; margin: 0.5em 0;">
+    <img src="../assets/personas.png" style="max-width: 100%; height: auto; margin: 0.5em 0;">
     <p style="margin-top: 0.3em; font-size: 0.9em; font-style: italic;">
         Fonte:Produção Autoral.
     </p>
