@@ -24,7 +24,7 @@ app.use('/', routes);
 
 
 app.get('/', (req, res) => {
-  res.send('Servidor está rodando! 🚀');
+  res.send('Servidor está rodando!');
 });
 
 
