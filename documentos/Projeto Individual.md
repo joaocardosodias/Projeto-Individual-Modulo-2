@@ -156,6 +156,7 @@ A principal importância dos wireframes está na sua capacidade de facilitar a c
         Fonte:Produção Autoral.
     </p>
 </div>
+
 ### 3.4. Guia de estilos (Semana 05)
 
 *Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução.*
