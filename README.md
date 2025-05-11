@@ -17,6 +17,7 @@ O sistema mostra as salas disponíveis em horários fixos e permite realizar res
 ---
 
 ## 📁 Estrutura de Pastas
+```bash
 PROJETO-INDIVIDUAL-MODULO-2/
 │
 ├── documentos/                  # Documentação do projeto
@@ -41,6 +42,7 @@ PROJETO-INDIVIDUAL-MODULO-2/
 ├── package-lock.json            # Versões travadas das dependências
 ├── server.js                    # Inicialização do servidor Express
 └── README.md                    # Documentação principal do projeto
+```
 
 
 ---
