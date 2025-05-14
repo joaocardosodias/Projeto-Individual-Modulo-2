@@ -157,6 +157,19 @@ A principal importância dos wireframes está na sua capacidade de facilitar a c
     </p>
 </div>
 
+#### Telas da Aplicação
+
+A aplicação é composta por três telas principais:
+
+##### 1. Tela de Login
+Nesta primeira etapa, o usuário deve inserir suas credenciais para acessar sua conta.
+
+##### 2. Tela de Histórico de Reservas
+Após o login, o usuário visualiza suas reservas anteriores e tem acesso a um botão para agendar uma nova reserva.
+##### 3. Tela de Nova Reserva
+Nesta tela, o usuário poderá escolher a sala desejada, selecionar a data e o horário para concluir a reserva.
+
+
 ### 3.4. Guia de estilos (Semana 05)
 
 *Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução.*
