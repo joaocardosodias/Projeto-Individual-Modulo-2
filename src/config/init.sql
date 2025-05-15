@@ -1,8 +1,3 @@
--- Criação do banco de dados
-CREATE DATABASE StudyHub_database;
-
--- Conecta-se ao banco de dados recém-criado
-\connect StudyHub_database;
 
 -- Criação da tabela de usuários
 CREATE TABLE usuarios (
