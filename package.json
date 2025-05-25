@@ -1,12 +1,12 @@
 {
   "name": "projeto-individual-modulo-2",
   "version": "1.0.0",
-  "description": "Projeto Individual-Módulo 2",
+  "description": "Este projeto é uma aplicação web para **gerenciamento de reservas de salas**, criada como projeto individual para o módulo 2",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "start": "node src/app.js",
+    "db:init": "node src/scripts/initDb.js"
   },
   "repository": {
     "type": "git",
@@ -20,11 +20,10 @@
   },
   "homepage": "https://github.com/joaocardosodias/Projeto-Individual-Modulo-2#readme",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "pg": "^8.15.6"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.10"
+    "pg": "^8.16.0"
   }
 }
