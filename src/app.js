@@ -1,7 +1,7 @@
 // src/app.js
 const express = require('express');
 const path = require('path');
-const authRoutes = require('./routes/authRoutes');
+const authRoutes = require('./routes/authRoutes'); // Suas rotas de API
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,44 +11,41 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Servir arquivos estáticos da pasta 'public' (para CSS, JS, imagens, etc.)
-// Isso garante que css/style.css e js/login.js sejam encontrados
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Rotas da API
+// Rotas da API de autenticação
 app.use('/api/auth', authRoutes);
 
-// Rota principal para servir a página de login da pasta 'views'
-// Quando alguém acessar a raiz do seu site (ex: http://localhost:3000/),
-// o arquivo login.html da pasta views será enviado.
+// ROTA PRINCIPAL: Servir a nova página de boas-vindas/index
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'login.html')); // Caminho atualizado para 'views/login.html'
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
-/*
-// Opcional: Se você preferir que a URL seja /login em vez de /
-// comente a rota app.get('/') acima e descomente esta:
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'login.html'));
-});
-*/
-
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-    // Ajuste a URL de acordo com a rota que você escolheu para servir login.html
-    console.log(`Acesse a tela de login em http://localhost:${PORT}/`); // Se estiver usando app.get('/')
-    // console.log(`Acesse a tela de login em http://localhost:${PORT}/login`); // Se estiver usando app.get('/login')
-});
-// src/app.js
-// ... (outras importações e configurações) ...
-
-// Rota principal para servir a página de login da pasta 'views'
-app.get('/', (req, res) => {
+// Rota para servir a página de login
+app.get('/login.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'login.html'));
 });
 
-// Adicione esta rota para servir a página de cadastro
+// Rota para servir a página de cadastro
 app.get('/register.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'register.html'));
 });
 
-// ... (rotas da API e app.listen) ...
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+    console.log(`Acesse a aplicação em http://localhost:${PORT}/`);
+});
+// src/app.js
+// ... (outras importações e configurações)
+
+// Rota para o dashboard de reservas
+app.get('/dashboard.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'dashboard.html'));
+});
+
+// Rota para a página de nova reserva
+app.get('/new_reservation.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'new_reservation.html'));
+});
+
+// ... (app.listen e outras rotas)
