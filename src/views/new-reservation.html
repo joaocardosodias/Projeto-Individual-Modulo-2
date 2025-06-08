@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Reserva - StudyHub</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="app-body">
+    <header class="app-header">
+        <a href="/dashboard" class="back-button">&larr;</a>
+        <h1>Nova Reserva</h1>
+    </header>
+
+    <main class="app-main-content">
+        <form id="reservationForm">
+            <section class="form-section">
+                <label for="room-select">1. Escolha a Sala</label>
+                <select id="room-select" required>
+                    <option value="" disabled selected>Selecione uma sala...</option>
+                    </select>
+            </section>
+
+            <section class="form-section">
+                <label for="date-select">2. Escolha a Data</label>
+                <input type="date" id="date-select" required>
+            </section>
+
+            <section class="form-section">
+                <label>3. Escolha o Horário</label>
+                <div id="time-block-container">
+                    </div>
+                <input type="hidden" id="time-block-id" required>
+            </section>
+
+            <button type="submit" class="btn-reservar">Reservar</button>
+        </form>
+        <p id="reservation-message" class="message"></p>
+    </main>
+    <script src="/js/new-reservation.js"></script>
+</body>
+</html>

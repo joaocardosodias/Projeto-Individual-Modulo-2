@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyHub - Acesso</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div id="login-form-container">
+            <div class="form-header">
+                <img src="/images/inteli_logo.png" alt="Logo Inteli" class="auth-logo">
+                <h2>Bem-vindo!</h2>
+                <p>Faça login para continuar</p>
+            </div>
+            <form id="loginForm">
+                <input type="email" id="loginEmail" placeholder="E-mail" required>
+                <input type="password" id="loginPassword" placeholder="Senha" required>
+                <button type="submit">Entrar</button>
+            </form>
+            <p id="loginMessage" class="message"></p>
+            <p class="toggle-link">Não tem uma conta? <a href="#" id="showRegister">Cadastre-se</a></p>
+        </div>
+
+        <div id="register-form-container" style="display: none;">
+            <div class="form-header">
+                <img src="/images/inteli_logo.png" alt="Logo Inteli" class="auth-logo">
+                <h2>Crie sua Conta</h2>
+                <p>É rápido e fácil</p>
+            </div>
+            <form id="registerForm">
+                <input type="text" id="registerNome" placeholder="Nome completo" required>
+                <input type="email" id="registerEmail" placeholder="E-mail" required>
+                <input type="password" id="registerPassword" placeholder="Senha" required>
+                <button type="submit">Cadastrar</button>
+            </form>
+            <p id="registerMessage" class="message"></p>
+            <p class="toggle-link">Já tem uma conta? <a href="#" id="showLogin">Faça Login</a></p>
+        </div>
+    </div>
+    <script src="/js/auth.js"></script>
+</body>
+</html>

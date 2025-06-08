@@ -1,662 +1,238 @@
-/* src/public/css/style.css */
+/* Reset Básico e Variáveis Globais */
 :root {
-    --inteli-purple: #25073f;
-    --inteli-light-red: #d1280a;
-    --inteli-white: #FFFFFF;
-    --inteli-off-white: #f0f0f0; /* Para texto um pouco menos brilhante que branco puro */
-
-    /* Cores de Texto */
-    --text-on-dark-bg: var(--inteli-off-white);      /* Para texto geral sobre fundo roxo */
-    --text-on-dark-bg-strong: var(--inteli-white); /* Para títulos e botões sobre fundo roxo */
-    --text-on-light-bg-dark: #333333;     /* Para texto principal em containers brancos */
-    --text-on-light-bg-secondary: #555555;/* Para labels e subtítulos em containers brancos */
-
-    /* Cores de Fundo */
-    --background-body: var(--inteli-purple);            /* Roxo predominante no corpo */
-    --background-container-forms: var(--inteli-white); /* Forms são cards brancos */
-
-    /* Cores de Botão e Interação */
-    --button-primary-bg-welcome: var(--inteli-light-red); /* Botão Login na welcome page */
-    --button-primary-text-welcome: var(--inteli-white);
-    --button-primary-hover-bg-welcome: #c94804; /* Laranja mais escuro */
-
-    --button-secondary-border-welcome: var(--inteli-white);/* Botão Registrar na welcome page */
-    --button-secondary-text-welcome: var(--inteli-white);
-    --button-secondary-hover-bg-welcome: rgba(255, 255, 255, 0.1);
-
-    --button-form-submit-bg: var(--inteli-purple); /* Botões de submit nos formulários */
-    --button-form-submit-text: var(--inteli-white);
-    --button-form-submit-hover-bg: #482469; /* Roxo mais escuro */
-    
-    --link-form-color: var(--inteli-light-red); /* Links ("cadastre-se") nos formulários */
-
-    /* Outras Cores */
-    --input-border-color: #CCCCCC;
-    --input-focus-border-color: var(--inteli-purple);
-    --input-focus-shadow: rgba(90, 45, 130, 0.15);
-    --container-shadow: rgba(0, 0, 0, 0.1);
-    --success-color: #28a745;
-    --error-color: #dc3545;
+    --bg-dark-primary: #1e2124;
+    --bg-dark-secondary: #282b30;
+    --bg-dark-tertiary: #36393f;
+    --text-primary: #ffffff;
+    --text-secondary: #b9bbbe;
+    --accent-primary: #d1280a; /* Inteli Vermelho/Laranja */
+    --accent-secondary: #25073f; /* Inteli Roxo */
+    --success: #43b581;
+    --error: #f04747;
 }
 
-/* Reset básico e configuração da fonte */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    background-color: var(--background-body); /* Roxo como fundo principal */
-    color: var(--text-on-dark-bg);          /* Texto padrão para o body (se houver fora de containers) */
+/* === PÁGINA DE AUTENTICAÇÃO === */
+.auth-body {
+    background-color: var(--accent-secondary);
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     min-height: 100vh;
     padding: 20px;
 }
 
-/* --- Estilos para a Página de Boas-Vindas (index.html) --- */
-.welcome-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;
-    width: 100%;
-    max-width: 600px;
-    /* Sem fundo próprio, usa o do body */
-}
-
-.welcome-logo {
-    max-width: 180px;
-    margin-bottom: 30px;
-    /* Certifique-se que o logo é visível em fundo roxo (ex: logo branco) */
-}
-
-.welcome-container h1 {
-    color: var(--text-on-dark-bg-strong); /* Texto branco/forte no fundo roxo */
-    font-size: 2em;
-    margin-bottom: 15px;
-    font-weight: 700;
-}
-
-.welcome-container .subtitle {
-    font-size: 1.1em;
-    color: var(--text-on-dark-bg); /* Texto claro no fundo roxo */
-    margin-bottom: 40px;
-    max-width: 480px;
-    line-height: 1.6;
-}
-
-.welcome-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-    max-width: 320px;
-}
-
-/* Estilo base para botões (geralmente usado pelos botões da welcome page) */
-.btn {
-    display: inline-block;
-    padding: 14px 20px;
+.auth-container {
+    background-color: var(--bg-dark-primary);
+    padding: 30px;
     border-radius: 8px;
-    text-decoration: none;
-    font-size: 1.05em;
-    font-weight: 600;
-    text-align: center;
-    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
-    border: 2px solid transparent;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-}
-
-/* Botão LOGIN na Welcome Page */
-.welcome-buttons .btn-primary {
-    background-color: var(--button-primary-bg-welcome);
-    color: var(--button-primary-text-welcome);
-    border-color: var(--button-primary-bg-welcome); /* Borda da mesma cor do fundo */
-}
-
-.welcome-buttons .btn-primary:hover {
-    background-color: var(--button-primary-hover-bg-welcome);
-    border-color: var(--button-primary-hover-bg-welcome);
-}
-
-/* Botão REGISTRAR na Welcome Page */
-.welcome-buttons .btn-secondary {
-    background-color: transparent;
-    color: var(--button-secondary-text-welcome);
-    border: 2px solid var(--button-secondary-border-welcome);
-}
-
-.welcome-buttons .btn-secondary:hover {
-    background-color: var(--button-secondary-hover-bg-welcome);
-}
-
-
-/* --- Estilos para Formulários (login-container, register-container) --- */
-/* Estes containers aparecerão como "cards" brancos sobre o fundo roxo do body */
-.login-container,
-.register-container {
-    background-color: var(--background-container-forms); /* Fundo branco para os forms */
-    color: var(--text-on-light-bg-dark);               /* Texto escuro dentro dos forms */
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px var(--container-shadow);
     width: 100%;
-    max-width: 420px;
-    text-align: center;
-    margin-top: 20px; /* Adiciona um espaço se múltiplos cards forem empilhados ou para separar do topo */
-    margin-bottom: 20px;
+    max-width: 400px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    color: var(--text-primary);
 }
 
-.login-container h2,
-.register-container h2 {
-    color: var(--inteli-purple); /* Título roxo no card branco */
+.form-header {
+    text-align: center;
     margin-bottom: 25px;
-    font-size: 1.75em;
 }
-
-.login-container label,
-.register-container label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
+.auth-logo {
+    width: 80px;
+    margin-bottom: 15px;
+}
+.form-header h2 {
+    margin-bottom: 5px;
+}
+.form-header p {
+    color: var(--text-secondary);
     font-size: 0.9em;
-    color: var(--text-on-light-bg-secondary); /* Label cinza no card branco */
 }
 
-.login-container input[type="text"],
-.login-container input[type="email"],
-.login-container input[type="password"],
-.register-container input[type="text"],
-.register-container input[type="email"],
-.register-container input[type="password"] {
+.auth-container form input {
     width: 100%;
-    padding: 12px 15px;
-    border: 1px solid var(--input-border-color);
-    border-radius: 6px;
+    background-color: var(--bg-dark-secondary);
+    border: 1px solid var(--bg-dark-tertiary);
+    border-radius: 5px;
+    padding: 12px;
+    color: var(--text-primary);
     font-size: 1em;
-    color: var(--text-on-light-bg-dark);
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    margin-bottom: 15px;
 }
-
-.login-container input:focus,
-.register-container input:focus {
-    border-color: var(--input-focus-border-color); /* Foco roxo */
+.auth-container form input:focus {
     outline: none;
-    box-shadow: 0 0 0 3px var(--input-focus-shadow);
+    border-color: var(--accent-primary);
 }
 
-/* Botão de submit DENTRO dos formulários */
-.login-container button[type="submit"],
-.register-container button[type="submit"] {
+.auth-container form button {
     width: 100%;
-    padding: 12px 15px;
-    background-color: var(--button-form-submit-bg); /* Roxo */
-    color: var(--button-form-submit-text);         /* Branco */
+    padding: 12px;
+    background-color: var(--accent-primary);
     border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1.1em;
+    border-radius: 5px;
+    color: var(--text-primary);
+    font-size: 1em;
     font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: background-color 0.2s ease-in-out;
-    margin-top: 30px
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.auth-container form button:hover {
+    background-color: #a11f08;
 }
 
-.login-container button[type="submit"]:hover,
-.register-container button[type="submit"]:hover {
-    background-color: var(--button-form-submit-hover-bg); /* Roxo mais escuro */
+.message {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9em;
+    min-height: 20px;
 }
+.message.error { color: var(--error); }
+.message.success { color: var(--success); }
 
-/* Mensagens de feedback (dentro dos formulários brancos) */
-#message {
+.toggle-link {
+    text-align: center;
     margin-top: 20px;
     font-size: 0.9em;
-    min-height: 1.2em;
-    font-weight: 500;
-    /* As cores de sucesso e erro são globais e devem contrastar bem com o fundo do container onde estão */
 }
-#message.success { color: var(--success-color); }
-#message.error { color: var(--error-color); }
-
-
-/* Links "Cadastre-se aqui" / "Faça login aqui" (dentro dos formulários brancos) */
-.register-link,
-.login-link {
-    margin-top: 25px;
-    font-size: 0.9em;
-}
-
-.register-link a,
-.login-link a {
-    color: var(--link-form-color); /* Laranja/Vermelho */
+.toggle-link a {
+    color: var(--accent-primary);
     text-decoration: none;
-    font-weight: 600;
+    font-weight: bold;
 }
 
-.register-link a:hover,
-.login-link a:hover {
-    text-decoration: underline;
-}
-
-/* --- Media Queries --- */
-@media (min-width: 600px) {
-    .welcome-container h1 {
-        font-size: 2.5em;
-    }
-    .welcome-container .subtitle {
-        font-size: 1.2em;
-    }
-    .welcome-buttons {
-        flex-direction: row;
-        justify-content: center;
-        gap: 20px;
-    }
-    .btn { /* Aplicado aos botões da welcome page */
-        width: auto;
-        min-width: 160px;
-    }
-
-    .login-container,
-    .register-container {
-        padding: 30px 40px;
-        margin-top: 40px; /* Mais espaço em telas maiores */
-        margin-bottom: 40px;
-    }
-
-    .login-container h2,
-    .register-container h2 {
-        font-size: 2em;
-    }
-}
-/* Adicione ao final de src/public/css/style.css */
-
-/* === Estilos Globais para Telas Internas do App === */
-body.app-body {
-    background-color: #202225; /* Fundo escuro principal, similar ao Discord/imagem */
-    color: var(--inteli-off-white); /* Texto claro padrão para o corpo */
-    padding-top: 70px; /* Espaço para o header fixo */
+/* === PÁGINAS INTERNAS DO APP === */
+.app-body {
+    background-color: var(--bg-dark-primary);
+    color: var(--text-primary);
+    padding-top: 70px; /* Espaço para header fixo */
 }
 
 .app-header {
-    background-color: #2f3136; /* Cor de header um pouco mais clara ou var(--inteli-purple) */
-    color: var(--inteli-white);
-    padding: 15px 20px;
+    background-color: var(--bg-dark-secondary);
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    padding: 0 20px;
+    height: 60px;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
-
-.app-header .back-button {
-    color: var(--inteli-white);
+.app-header h1 { font-size: 1.2em; }
+.logout-button, .back-button {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
     text-decoration: none;
-    font-size: 1.8em;
-    margin-right: 15px;
+    padding: 8px 12px;
 }
-
-.app-header h1 {
-    font-size: 1.4em;
-    margin: 0;
-}
+.back-button { font-size: 1.5em; padding: 0; margin-right: 15px;}
 
 .app-main-content {
-    width: 100%;
-    max-width: 700px; /* Ou ajuste conforme necessário */
-    margin: 0 auto;
     padding: 20px;
 }
 
 .section-title {
-    font-size: 1.2em;
-    color: var(--inteli-white);
+    font-size: 1.1em;
     margin-bottom: 15px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #4f545c; /* Linha divisória sutil */
-    display: flex;
-    align-items: center;
+    border-bottom: 1px solid var(--bg-dark-tertiary);
 }
 
-.section-title-form { /* Títulos dentro da página de nova reserva */
-    font-size: 1.1em;
-    color: var(--inteli-white);
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-}
-
-.icon-placeholder { /* Para os ícones de check, calendário, relógio */
-    margin-right: 8px;
-    font-size: 1.2em;
-    color: var(--inteli-light-red); /* Usando a cor de destaque */
-}
-
-
-/* === Estilos para Dashboard de Reservas (dashboard.html) === */
-.reservations-section {
-    margin-bottom: 30px;
-}
+#reservations-list p { color: var(--text-secondary); }
 
 .reservation-card {
-    background-color: #2f3136; /* Cor dos cards */
-    border-radius: 8px;
+    background-color: var(--bg-dark-secondary);
     padding: 15px;
+    border-radius: 8px;
     margin-bottom: 15px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    transition: background-color 0.2s ease;
-    cursor: pointer;
 }
+.reservation-details h3 { font-size: 1.1em; margin-bottom: 5px; }
+.reservation-details p { font-size: 0.9em; color: var(--text-secondary); line-height: 1.5; }
+.reservation-card.status-cancelada p { color: var(--error); }
+.arrow-icon { font-size: 1.5em; color: var(--text-secondary); }
 
-.reservation-card:hover {
-    background-color: #36393e;
-}
-
-.reservation-icon {
-    width: 40px; /* Ajuste o tamanho do ícone/imagem da sala */
-    height: 40px;
-    margin-right: 15px;
-    border-radius: 4px;
-    object-fit: cover; /* Para garantir que a imagem cubra o espaço */
-}
-
-.reservation-details {
-    flex-grow: 1;
-}
-
-.reservation-details h3 {
-    color: var(--inteli-white);
-    font-size: 1.1em;
-    margin-bottom: 5px;
-}
-
-.reservation-details p {
-    font-size: 0.9em;
-    color: var(--inteli-off-white);
-    margin-bottom: 3px;
-    line-height: 1.4;
-}
-
-.reservation-card .arrow-icon {
-    font-size: 1.5em;
-    color: var(--inteli-off-white);
-}
-
-.reservation-card.status-cancelada .reservation-details p:first-of-type { /* Ex: Status: Cancelada */
-    color: var(--error-color); /* Destaca o status cancelado */
-}
-
-
-/* Botão Flutuante (FAB) */
 .fab {
-    background-color: var(--inteli-light-red); /* Cor de destaque Inteli */
-    color: var(--inteli-white);
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
     width: 60px;
     height: 60px;
+    background-color: var(--accent-primary);
+    color: var(--text-primary);
     border-radius: 50%;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     font-size: 2em;
     text-decoration: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 999;
-    transition: transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
-.fab:hover {
-    transform: scale(1.1);
-}
-
-
-/* === Estilos para Nova Reserva (new_reservation.html) === */
-.new-reservation-content section {
-    background-color: #2f3136; /* Fundo dos blocos de seção */
-    padding: 20px;
-    border-radius: 8px;
+/* TELA DE NOVA RESERVA */
+.form-section {
     margin-bottom: 25px;
 }
-
-/* Seleção de Sala */
-.room-scroller {
-    display: flex;
-    overflow-x: auto;
-    padding-bottom: 15px; /* Espaço para a barra de rolagem não cobrir conteúdo */
-    gap: 15px;
-}
-
-.room-card-select {
-    background-color: #3b3e45;
-    border-radius: 8px;
-    padding: 10px;
-    min-width: 120px; /* Largura mínima para cada card de sala */
-    text-align: center;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: border-color 0.2s ease;
-}
-
-.room-card-select img {
-    width: 80px; /* Ajuste */
-    height: 80px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 8px;
-}
-
-.room-card-select p {
-    font-size: 0.9em;
-    color: var(--inteli-off-white);
-}
-
-.room-card-select.selected {
-    border-color: var(--inteli-light-red); /* Destaque para sala selecionada */
-}
-
-.reservation-limit-message {
-    font-size: 0.85em;
-    color: var(--inteli-off-white);
-    text-align: center;
-    margin-top: 15px;
-}
-
-/* Calendário (Estilo Básico) */
-.calendar-container {
-    /* background-color: #3b3e45; Container já definido pela section */
-    border-radius: 8px;
-    /* padding: 15px; */
-}
-
-.calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    color: var(--inteli-white);
-}
-
-.calendar-header span {
-    font-size: 1.1em;
+.form-section label {
+    display: block;
+    margin-bottom: 10px;
     font-weight: bold;
 }
-
-.calendar-nav-btn {
-    background: none;
-    border: none;
-    color: var(--inteli-white);
-    font-size: 1.5em;
-    cursor: pointer;
+select, input[type="date"] {
+    width: 100%;
+    background-color: var(--bg-dark-secondary);
+    border: 1px solid var(--bg-dark-tertiary);
+    border-radius: 5px;
+    padding: 12px;
+    color: var(--text-primary);
+    font-size: 1em;
+}
+/* Estilo para o ícone do calendário em navegadores WebKit */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
 }
 
-.calendar-grid {
+#time-block-container {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
-    text-align: center;
-}
-
-.calendar-day-label, .calendar-day {
-    padding: 8px 0;
-    font-size: 0.9em;
-    border-radius: 4px;
-}
-
-.calendar-day-label {
-    font-weight: bold;
-    color: var(--inteli-off-white);
-}
-
-.calendar-day {
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    color: var(--inteli-off-white);
-}
-.calendar-day:hover {
-    background-color: #4f545c;
-}
-.calendar-day.other-month {
-    color: #72767d; /* Dias de outro mês mais apagados */
-}
-.calendar-day.selected-date {
-    background-color: var(--inteli-light-red);
-    color: var(--inteli-white);
-    font-weight: bold;
-}
-
-/* Blocos de Horário */
-.time-slots-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Responsivo */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 10px;
-    margin-top: 10px;
 }
-
 .time-slot-btn {
-    background-color: #3b3e45;
-    color: var(--inteli-off-white);
-    border: 1px solid #4f545c;
-    padding: 10px;
-    border-radius: 6px;
+    padding: 12px;
+    background-color: var(--bg-dark-tertiary);
+    color: var(--text-primary);
+    border: 1px solid transparent;
+    border-radius: 5px;
     cursor: pointer;
-    text-align: center;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
 }
-
-.time-slot-btn:hover:not(:disabled) {
-    background-color: #4f545c;
-}
-
 .time-slot-btn.selected-time {
-    background-color: var(--inteli-light-red);
-    color: var(--inteli-white);
-    border-color: var(--inteli-light-red);
+    background-color: var(--accent-primary);
     font-weight: bold;
-}
-
-.time-slot-btn:disabled {
-    background-color: #292b2f;
-    color: #72767d;
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-/* Regras e Botão Reservar */
-.rules-agreement-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.9em;
-    color: var(--inteli-off-white);
-    /* background-color: #2f3136; padding e border-radius já na section */
-}
-.rules-agreement-section a {
-    color: var(--inteli-light-red);
-    text-decoration: none;
-}
-.rules-agreement-section a:hover {
-    text-decoration: underline;
-}
-
-/* Estilo para o switch (toggle) */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 50px; /* Largura do switch */
-  height: 24px; /* Altura do switch */
-}
-.switch input { 
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #4f545c; /* Cor do switch desligado */
-  transition: .4s;
-}
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 18px; /* Tamanho da bolinha */
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: .4s;
-}
-input:checked + .slider {
-  background-color: var(--inteli-light-red); /* Cor do switch ligado */
-}
-input:checked + .slider:before {
-  transform: translateX(26px); /* Movimento da bolinha */
-}
-.slider.round {
-  border-radius: 24px;
-}
-.slider.round:before {
-  border-radius: 50%;
 }
 
 .btn-reservar {
     width: 100%;
     padding: 15px;
-    background-color: var(--inteli-light-red); /* Cor de destaque Inteli */
-    color: var(--inteli-white);
+    background-color: var(--accent-primary);
     border: none;
-    border-radius: 8px;
-    font-size: 1.2em;
+    border-radius: 5px;
+    color: var(--text-primary);
+    font-size: 1.1em;
     font-weight: bold;
-    text-transform: uppercase;
     cursor: pointer;
-    margin-top: 20px; /* Espaço acima do botão */
-    transition: background-color 0.2s ease;
-}
-
-.btn-reservar:hover {
-    background-color: var(--button-primary-hover-bg-welcome); /* Reutilizando variável de hover */
+    margin-top: 20px;
 }

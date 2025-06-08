@@ -3,73 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minhas Reservas - Inteli</title>
+    <title>Dashboard - StudyHub</title>
     <link rel="stylesheet" href="/css/style.css">
-    </head>
-<body class="app-body"> <header class="app-header">
-        <a href="#" class="back-button">&larr;</a> <h1>Reservas</h1>
+</head>
+<body class="app-body">
+    <header class="app-header">
+        <h1>Minhas Reservas</h1>
+        <button id="logoutBtn" class="logout-button">Sair</button>
     </header>
 
     <main class="app-main-content">
         <section class="reservations-section">
-            <h2 class="section-title">
-                <span class="icon-placeholder">&#10004;</span> Suas reservas
-            </h2>
-            
-            <div class="reservation-card">
-                <img src="/images/placeholder_room_icon.png" alt="Ícone da sala" class="reservation-icon">
-                <div class="reservation-details">
-                    <h3>Sala de Estudo 2</h3>
-                    <p>Status: Ativa</p>
-                    <p>Fri, 30 May 2025</p>
-                    <p>12:00 PM às 4:00 PM</p>
-                </div>
-                <span class="arrow-icon">&gt;</span>
+            <h2 class="section-title">Reservas Antigas</h2>
+            <div id="reservations-list">
+                <p>Nenhuma reserva antiga encontrada.</p>
             </div>
-
-            <div class="reservation-card">
-                <img src="/images/placeholder_room_icon.png" alt="Ícone da sala" class="reservation-icon">
-                <div class="reservation-details">
-                    <h3>Sala de Reunião Alfa</h3>
-                    <p>Status: Ativa</p>
-                    <p>Sat, 31 May 2025</p>
-                    <p>08:00 AM às 10:00 AM</p>
-                </div>
-                <span class="arrow-icon">&gt;</span>
-            </div>
-            </section>
-
-        <section class="reservations-section">
-            <h2 class="section-title">
-                <span class="icon-placeholder">&#10004;</span> Reservas Antigas
-            </h2>
-
-            <div class="reservation-card">
-                <img src="/images/placeholder_room_icon.png" alt="Ícone da sala" class="reservation-icon">
-                <div class="reservation-details">
-                    <h3>Sala de Estudo 3</h3>
-                    <p>Status: Realizada</p>
-                    <p>Wed, 02 April 2025</p>
-                    <p>8:00 AM às 12:00 PM</p>
-                </div>
-                <span class="arrow-icon">&gt;</span>
-            </div>
-            
-            <div class="reservation-card status-cancelada"> <img src="/images/placeholder_room_icon.png" alt="Ícone da sala" class="reservation-icon">
-                <div class="reservation-details">
-                    <h3>Churrasqueira 1</h3>
-                    <p>Status: Cancelada</p>
-                    <p>Thu, 20 February 2025</p>
-                    <p>8:00 PM às 12:00 AM</p>
-                </div>
-                <span class="arrow-icon">&gt;</span>
-            </div>
-            </section>
+        </section>
     </main>
 
-    <a href="/new_reservation.html" class="fab">
-        +
-        </a>
-
+    <a href="/new-reservation" class="fab">+</a>
+    <script src="/js/dashboard.js"></script>
 </body>
 </html>
