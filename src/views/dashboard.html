@@ -4,19 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - StudyHub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="app-body">
     <header class="app-header">
-        <h1>Minhas Reservas</h1>
+        <h1>Dashboard</h1>
         <button id="logoutBtn" class="logout-button">Sair</button>
     </header>
 
     <main class="app-main-content">
-        <section class="reservations-section">
-            <h2 class="section-title">Reservas Antigas</h2>
-            <div id="reservations-list">
-                <p>Nenhuma reserva antiga encontrada.</p>
+        <section class="reservation-list">
+            <h2 class="section-title">Reservas Ativas</h2>
+            <div id="active-reservations-list">
+                <p>Carregando reservas ativas...</p>
+            </div>
+        </section>
+
+        <section class="reservation-list">
+            <h2 class="section-title">Histórico de Reservas</h2>
+            <div id="past-reservations-list">
+                <p>Carregando histórico...</p>
             </div>
         </section>
     </main>
