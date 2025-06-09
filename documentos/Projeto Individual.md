@@ -129,19 +129,149 @@ O verdadeiro poder dessa metodologia, como sintetiza Rubin (2012), revela-se qua
 #
 
 ### 3.1.1 BD e Models (Semana 5)
-*Descreva aqui os Models implementados no sistema web*
+
+A camada de **Model** no projeto StudyHub é responsável por toda a interação direta com o banco de dados PostgreSQL. Ela abstrai as consultas SQL, fornecendo uma interface clara e segura para que os Controllers possam manipular os dados sem conhecer os detalhes da implementação do banco.
+
+Esta camada garante a integridade e a lógica de acesso aos dados, servindo como a ponte entre a lógica de negócio da aplicação e a persistência de dados. Foram implementados dois Models principais: `userModel.js` e `reservationModel.js`.
+
+#### 1. userModel.js
+
+Este model é responsável por gerenciar todas as operações relacionadas à entidade de Usuário. Ele interage diretamente com a tabela `usuarios` do banco de dados.
+
+**Objetivo:** Prover funcionalidades para o cadastro e a autenticação de usuários, como a criação de novos registros e a busca por usuários existentes.
+
+##### Métodos Implementados:
+
+###### `create({ nome, email, senha_hash })`
+- **Descrição:** Insere um novo usuário na tabela `usuarios`. Este método recebe um objeto com os dados do usuário, incluindo a senha já processada (hasheada) pelo `authController`.
+- **Uso no Sistema:** É o método central da funcionalidade de Cadastro.
+- **Retorno:** Retorna o objeto do usuário recém-criado (com id, nome, e email), confirmando que a operação foi bem-sucedida.
+
+###### `findByEmail(email)`
+- **Descrição:** Realiza uma busca na tabela `usuarios` por um registro que corresponda ao e-mail fornecido.
+- **Uso no Sistema:** É um método crucial e utilizado em dois momentos:
+  1. No **Cadastro**, para verificar se o e-mail que o usuário está tentando cadastrar já existe no sistema, evitando duplicidade.
+  2. No **Login**, para encontrar o usuário correspondente ao e-mail informado e, posteriormente, verificar sua senha.
+- **Retorno:** Retorna o objeto completo do usuário encontrado ou `undefined` caso nenhum usuário com aquele e-mail exista.
+
+#### 2. reservationModel.js
+
+Este é o model mais complexo da aplicação, responsável por toda a lógica de negócio relacionada a Reservas. Ele interage primariamente com a tabela `reservas`, mas também realiza JOINs com as tabelas `salas` e `blocos_horario` para obter informações completas.
+
+**Objetivo:** Gerenciar a criação, consulta e modificação de reservas, além de fornecer dados sobre a disponibilidade das salas.
+
+##### Métodos Implementados:
+
+###### `findActiveByUser(userId)`
+- **Descrição:** Busca no banco de dados todas as reservas de um usuário específico (`userId`) que ainda estão ativas, ou seja, aquelas cuja data é igual ou posterior ao dia atual e cujo status é 'ativa'.
+- **Uso no Sistema:** Utilizado para popular a seção "Reservas Ativas" no dashboard do usuário.
+- **Retorno:** Retorna um array de objetos, onde cada objeto representa uma reserva ativa com detalhes da sala e horário.
+
+###### `findPastByUser(userId)`
+- **Descrição:** Busca todas as reservas passadas de um usuário. Isso inclui reservas com datas anteriores ao dia atual ou cujo status não seja mais 'ativa' (ex: 'cancelada', 'realizada').
+- **Uso no Sistema:** Utilizado para popular a seção "Histórico de Reservas" no dashboard.
+- **Retorno:** Retorna um array com o histórico de reservas do usuário.
+
+###### `cancel(reservationId, userId)`
+- **Descrição:** Atualiza o status de uma reserva para 'cancelada'. Este método é seguro, pois a consulta SQL verifica se o `reservationId` pertence ao `userId` que está fazendo a solicitação e se a reserva ainda está com o status 'ativa', impedindo que um usuário cancele reservas de outros ou reservas que já foram finalizadas.
+- **Uso no Sistema:** É o método central da funcionalidade de Cancelar Reserva.
+- **Retorno:** Retorna o objeto da reserva atualizada se o cancelamento for bem-sucedido, ou `undefined` caso contrário.
+
+###### `create({ usuario_id, sala_id, data_reserva, bloco_id })`
+- **Descrição:** Insere um novo registro na tabela `reservas`, efetivamente criando uma nova reserva para um usuário.
+- **Uso no Sistema:** É o passo final do fluxo de Nova Reserva.
+- **Detalhe Importante:** Este método se beneficia da CONSTRAINT de UNIQUE definida no banco de dados para a combinação de (`sala_id`, `data_reserva`, `bloco_id`). Se um usuário tentar criar uma reserva que já existe, o banco de dados retornará um erro de violação de unicidade (código 23505), que o método captura e transforma em uma mensagem de erro amigável para o usuário ("Este horário para esta sala já está reservado.").
+
+###### `getAvailabilityForRoom(sala_id, year, month)`
+- **Descrição:** Realiza uma consulta mais complexa para determinar quais dias de um determinado mês e ano já estão com todos os blocos de horário reservados para uma sala específica.
+- **Uso no Sistema:** É a base da funcionalidade interativa do calendário na página de Nova Reserva. O frontend usa os dados retornados para desabilitar visualmente os dias em que não é mais possível fazer reservas.
+- **Retorno:** Retorna um array de números, representando os dias do mês que estão totalmente ocupados.
+
+###### Observação sobre Outras Tabelas:
+
+As tabelas `salas` e `blocos_horario`, por serem mais simples e utilizadas principalmente para consulta (lookup), não possuem um arquivo de Model dedicado. As consultas a essas tabelas são realizadas diretamente no `reservationController` para otimizar e simplificar a estrutura do projeto.
 
 ### 3.2. Arquitetura (Semana 5)
 
-*Posicione aqui o diagrama de arquitetura da sua solução de aplicação web. Atualize sempre que necessário.*
 
-**Instruções para criação do diagrama de arquitetura**  
-- **Model**: A camada que lida com a lógica de negócios e interage com o banco de dados.
-- **View**: A camada responsável pela interface de usuário.
-- **Controller**: A camada que recebe as requisições, processa as ações e atualiza o modelo e a visualização.
-  
-*Adicione as setas e explicações sobre como os dados fluem entre o Model, Controller e View.*
 
+A arquitetura do StudyHub segue uma variação do padrão Model-View-Controller (MVC), adaptada para uma aplicação web moderna com backend em Node.js e frontend desacoplado.
+
+#### Componentes da Arquitetura
+
+- **Model**: A camada de lógica e acesso a dados, representada pelos arquivos em `src/models/`. Ela se comunica exclusivamente com o banco de dados PostgreSQL.
+- **View**: A camada de apresentação, composta pelos arquivos HTML em `src/views/` e os arquivos estáticos (CSS, JavaScript do cliente, imagens) em `src/public/`. Tudo isso é renderizado no navegador do usuário.
+- **Controller**: O cérebro da aplicação, representado pelos arquivos em `src/controllers/`. Ele recebe as requisições da View, utiliza os Models para manipular dados e retorna as respostas adequadas.
+
+#### Diagrama de Fluxo (Login de Usuário)
+
+```
++--------------------------------+
+|          👤 Usuário             |
++--------------------------------+
+             |
+             v  1. Interage com a interface (preenche formulário, clica em botões)
+             |
+.--------------------------------------.
+|          VIEW (Navegador)            |
+|   (HTML, CSS, JavaScript do Cliente) |
+'--------------------------------------'
+             |
+             v  2. Requisição HTTP (ex: POST /api/auth/login com dados)
+             |
+.--------------------------------------.
+|   CONTROLLER (Node.js / Express)     |
+|   (Recebe a requisição, chama o      |
+|    Middleware de Autenticação se     |
+|    necessário, e orquestra a ação)   |
+'--------------------------------------'
+             |
+             v  3. Chama a função apropriada do Model (ex: User.findByEmail)
+             |
+.--------------------------------------.
+|             MODEL                    |
+|   (Contém a lógica de negócio e as   |
+|    consultas para o banco de dados)  |
+'--------------------------------------'
+             |
+             v  4. Executa a consulta SQL (ex: SELECT * FROM ...)
+             |
+.--------------------------------------.
+| BANCO DE DADOS (PostgreSQL/Supabase) |
+|   (Armazena e recupera os dados)     |
+'--------------------------------------'
+             |
+             v  5. Retorna o resultado da consulta para o Model
+             |
+.--------------------------------------.
+|             MODEL                    |
+|   (Processa os dados e retorna para   |
+|    o Controller)                     |
+'--------------------------------------'
+             |
+             v  6. Retorna os dados processados para o Controller
+             |
+.--------------------------------------.
+|      CONTROLLER                      |
+|   (Processa o resultado, gera uma    |
+|    resposta HTTP - ex: Token JWT)    |
+'--------------------------------------'
+             |
+             v  8. Envia a resposta HTTP (ex: JSON com Token) de volta para a View
+             |
+.--------------------------------------.
+|          VIEW (Navegador)            |
+|   (Recebe a resposta, atualiza a     |
+|    interface, redireciona o usuário) |
+'--------------------------------------'
+             |
+             v  9. A interface é atualizada para o usuário
+             |
++--------------------------------+
+|          👤 Usuário             |
++--------------------------------+
+
+```
 ### 3.3. Wireframes (Semana 03)
 
 Wireframes são representações visuais simplificadas da estrutura de uma interface, geralmente utilizadas nas etapas iniciais do design de produtos digitais. Eles descrevem o layout de uma página sem se preocupar com detalhes estéticos, focando apenas na organização dos elementos e na hierarquia da informação. Segundo Garrett (2011), os wireframes são essenciais para mapear como o usuário interage com o sistema, permitindo antecipar problemas de usabilidade e otimizar a navegação.
@@ -181,7 +311,197 @@ Nesta tela, o usuário poderá escolher a sala desejada, selecionar a data e o h
 
 ### 3.6. WebAPI e endpoints (Semana 05)
 
-*Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.*  
+
+
+Esta documentação descreve todos os endpoints da API RESTful do sistema StudyHub. A API é responsável por toda a comunicação entre o frontend (cliente no navegador) e o backend (servidor Node.js).
+
+#### **Convenções Gerais**
+* **URL Base:** Todas as rotas são prefixadas com `/api`.
+* **Autenticação:** Rotas protegidas requerem um Token JWT válido, que deve ser enviado no cabeçalho (`header`) da requisição da seguinte forma:
+    `Authorization: Bearer <seu-token-jwt>`
+* **Formato de Dados:** Todas as requisições e respostas que contêm um corpo de dados utilizam o formato JSON.
+
+---
+#### Endpoints de Autenticação
+**Rota Base:** `/api/auth`
+
+Estes endpoints gerenciam o cadastro e o login de usuários.
+
+##### **`POST /api/auth/register`**
+* **Descrição:** Registra um novo usuário no sistema.
+* **Autenticação:** Pública.
+* **Corpo da Requisição (Request Body):**
+    ```json
+    {
+        "nome": "string",
+        "email": "string",
+        "senha": "string"
+    }
+    ```
+* **Resposta de Sucesso (`201 Created`):**
+    ```json
+    {
+        "message": "Usuário cadastrado com sucesso!",
+        "userId": 1
+    }
+    ```
+* **Respostas de Erro:**
+    * `400 Bad Request`: Se algum dos campos (`nome`, `email`, `senha`) estiver faltando.
+    * `409 Conflict`: Se o e-mail fornecido já estiver em uso.
+
+---
+##### **`POST /api/auth/login`**
+* **Descrição:** Autentica um usuário existente e retorna um token de acesso.
+* **Autenticação:** Pública.
+* **Corpo da Requisição (Request Body):**
+    ```json
+    {
+        "email": "string",
+        "senha": "string"
+    }
+    ```
+* **Resposta de Sucesso (`200 OK`):**
+    ```json
+    {
+        "message": "Login bem-sucedido!",
+        "token": "seu.token.jwt.aqui"
+    }
+    ```
+* **Respostas de Erro:**
+    * `400 Bad Request`: Se `email` ou `senha` estiverem faltando.
+    * `401 Unauthorized`: Se as credenciais (e-mail ou senha) forem inválidas.
+
+---
+#### Endpoints de Reservas
+**Rota Base:** `/api/reservations`
+
+Estes endpoints gerenciam a criação, visualização e cancelamento de reservas, além de dados relacionados como salas e horários.
+
+##### **`GET /api/reservations/active`**
+* **Descrição:** Retorna a lista de reservas ativas (data atual ou futura) para o usuário autenticado.
+* **Autenticação:** Protegida (Requer Token JWT).
+* **Resposta de Sucesso (`200 OK`):**
+    ```json
+    [
+        {
+            "id": 1,
+            "data_reserva": "2025-06-10T03:00:00.000Z",
+            "status": "ativa",
+            "sala_codigo": "R01",
+            "hora_inicio": "08:00:00",
+            "hora_fim": "10:00:00"
+        }
+    ]
+    ```
+* **Respostas de Erro:**
+    * `401 Unauthorized`: Se o token for inválido ou não for fornecido.
+
+---
+##### **`GET /api/reservations/past`**
+* **Descrição:** Retorna o histórico de reservas (passadas, canceladas ou realizadas) para o usuário autenticado.
+* **Autenticação:** Protegida (Requer Token JWT).
+* **Resposta de Sucesso (`200 OK`):**
+    * *Formato do array similar ao de reservas ativas.*
+* **Respostas de Erro:**
+    * `401 Unauthorized`: Se o token for inválido ou não for fornecido.
+
+---
+##### **`POST /api/reservations`**
+* **Descrição:** Cria uma nova reserva para o usuário autenticado.
+* **Autenticação:** Protegida (Requer Token JWT).
+* **Corpo da Requisição (Request Body):**
+    ```json
+    {
+        "sala_id": 1,
+        "data_reserva": "2025-06-15",
+        "bloco_id": 2
+    }
+    ```
+* **Resposta de Sucesso (`201 Created`):**
+    ```json
+    {
+        "message": "Reserva criada com sucesso!",
+        "reservation": {
+            "id": 5,
+            "usuario_id": 1,
+            "sala_id": 1,
+            "data_reserva": "2025-06-15T03:00:00.000Z",
+            "bloco_id": 2,
+            "status": "ativa"
+        }
+    }
+    ```
+* **Respostas de Erro:**
+    * `400 Bad Request`: Se algum dos campos obrigatórios estiver faltando.
+    * `401 Unauthorized`: Se o token for inválido.
+    * `409 Conflict`: Se a sala já estiver reservada para aquela data e horário.
+
+---
+##### **`PATCH /api/reservations/:id/cancel`**
+* **Descrição:** Cancela uma reserva ativa específica. O `:id` na URL deve ser o ID da reserva a ser cancelada.
+* **Autenticação:** Protegida (Requer Token JWT).
+* **Resposta de Sucesso (`200 OK`):**
+    ```json
+    {
+        "message": "Reserva cancelada com sucesso!",
+        "reservation": {
+            "id": 1,
+            "status": "cancelada",
+            "..."
+        }
+    }
+    ```
+* **Respostas de Erro:**
+    * `401 Unauthorized`: Se o token for inválido.
+    * `404 Not Found`: Se a reserva não existir, não pertencer ao usuário ou não estiver mais ativa.
+
+---
+#### Endpoints de Suporte (Dados para Formulários)
+
+##### **`GET /api/reservations/rooms`**
+* **Descrição:** Retorna uma lista de todas as salas disponíveis para reserva.
+* **Autenticação:** Protegida (Requer Token JWT).
+* **Resposta de Sucesso (`200 OK`):**
+    ```json
+    [
+        { "id": 1, "codigo": "R01" },
+        { "id": 2, "codigo": "R02" }
+    ]
+    ```
+* **Respostas de Erro:**
+    * `401 Unauthorized`: Se o token for inválido.
+
+---
+##### **`GET /api/reservations/time-blocks`**
+* **Descrição:** Retorna uma lista de todos os blocos de horário padrão.
+* **Autenticação:** Protegida (Requer Token JWT).
+* **Resposta de Sucesso (`200 OK`):**
+    ```json
+    [
+        { "id": 1, "hora_inicio": "08:00:00", "hora_fim": "10:00:00" },
+        { "id": 2, "hora_inicio": "10:00:00", "hora_fim": "12:00:00" }
+    ]
+    ```
+* **Respostas de Erro:**
+    * `401 Unauthorized`: Se o token for inválido.
+
+---
+##### **`GET /api/reservations/availability`**
+* **Descrição:** Verifica os dias em um determinado mês/ano que estão totalmente reservados para uma sala específica.
+* **Autenticação:** Protegida (Requer Token JWT).
+* **Parâmetros de Query (Query Params):**
+    * `sala_id` (obrigatório): O ID da sala a ser verificada.
+    * `year` (obrigatório): O ano a ser verificado.
+    * `month` (obrigatório): O mês a ser verificado (1 para Janeiro, 2 para Fevereiro, etc.).
+    * Exemplo de URL: `/api/reservations/availability?sala_id=1&year=2025&month=6`
+* **Resposta de Sucesso (`200 OK`):**
+    ```json
+    [15, 22, 28]
+    ```
+    *(Neste exemplo, os dias 15, 22 e 28 do mês consultado estão totalmente ocupados.)*
+* **Respostas de Erro:**
+    * `400 Bad Request`: Se algum dos parâmetros de query estiver faltando.
+    * `401 Unauthorized`: Se o token for inválido.
 
 ### 3.7 Interface e Navegação (Semana 07)
 

@@ -144,3 +144,69 @@ Para rodar o servidor em modo de produção:
 ```bash
 npm start
 ```
+```
++--------------------------------+
+|          👤 Usuário             |
++--------------------------------+
+             |
+             v  1. Interage com a interface (preenche formulário, clica em botões)
+             |
+.--------------------------------------.
+|          VIEW (Navegador)            |
+|   (HTML, CSS, JavaScript do Cliente) |
+'--------------------------------------'
+             |
+             v  2. Requisição HTTP (ex: POST /api/auth/login com dados)
+             |
+.--------------------------------------.
+|   CONTROLLER (Node.js / Express)     |
+|   (Recebe a requisição, chama o      |
+|    Middleware de Autenticação se     |
+|    necessário, e orquestra a ação)   |
+'--------------------------------------'
+             |
+             v  3. Chama a função apropriada do Model (ex: User.findByEmail)
+             |
+.--------------------------------------.
+|             MODEL                    |
+|   (Contém a lógica de negócio e as   |
+|    consultas para o banco de dados)  |
+'--------------------------------------'
+             |
+             v  4. Executa a consulta SQL (ex: SELECT * FROM ...)
+             |
+.--------------------------------------.
+| BANCO DE DADOS (PostgreSQL/Supabase) |
+|   (Armazena e recupera os dados)     |
+'--------------------------------------'
+             |
+             v  5. Retorna o resultado da consulta para o Model
+             |
+.--------------------------------------.
+|             MODEL                    |
+|   (Processa os dados e retorna para   |
+|    o Controller)                     |
+'--------------------------------------'
+             |
+             v  6. Retorna os dados processados para o Controller
+             |
+.--------------------------------------.
+|      CONTROLLER                      |
+|   (Processa o resultado, gera uma    |
+|    resposta HTTP - ex: Token JWT)    |
+'--------------------------------------'
+             |
+             v  8. Envia a resposta HTTP (ex: JSON com Token) de volta para a View
+             |
+.--------------------------------------.
+|          VIEW (Navegador)            |
+|   (Recebe a resposta, atualiza a     |
+|    interface, redireciona o usuário) |
+'--------------------------------------'
+             |
+             v  9. A interface é atualizada para o usuário
+             |
++--------------------------------+
+|          👤 Usuário             |
++--------------------------------+
+```
