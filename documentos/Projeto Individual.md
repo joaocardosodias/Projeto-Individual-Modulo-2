@@ -280,7 +280,7 @@ A principal importância dos wireframes está na sua capacidade de facilitar a c
 
 
 <div style="text-align: center; margin-bottom: 1em;">
-    <p style="margin-bottom: 0.3em; font-style: italic;"><strong>Figura 3</strong> – Representação do  Wireframe</p>
+    <p style="margin-bottom: 0.3em; font-style: italic;"><strong>Figura 4</strong> – Representação do  Wireframe</p>
     <img src="../assets/wireframe.png" style="max-width: 100%; height: auto; margin: 0.5em 0;">
     <p style="margin-top: 0.3em; font-size: 0.9em; font-style: italic;">
         Fonte:Produção Autoral.
@@ -505,8 +505,84 @@ Estes endpoints gerenciam a criação, visualização e cancelamento de reservas
 
 ### 3.7 Interface e Navegação (Semana 07)
 
-*Descreva e ilustre aqui o desenvolvimento do frontend do sistema web, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar.*
+#### **Implementação do Backend**
 
+O backend foi desenvolvido em **Node.js** com o framework **Express.js**, adotando uma arquitetura modular e escalável que emula o padrão **Model-View-Controller (MVC)** para garantir a separação de responsabilidades.
+
+##### **Arquitetura e Lógica de Dados**
+* **Estrutura de Código:** O projeto foi segmentado em diretórios para `controllers`, `models`, `routes` e `middleware`, promovendo a manutenibilidade do código.
+* **Camada de Modelo (Model):** A interação com o banco de dados **PostgreSQL** é totalmente abstraída pela camada de modelo. Os arquivos `userModel.js` e `reservationModel.js` encapsulam todas as consultas SQL, provendo métodos para manipulação de dados de usuários e reservas de forma segura e desacoplada da lógica de negócio.
+
+##### **API RESTful e Segurança**
+* **Autenticação e Autorização:**
+    * Foi implementado um sistema de autenticação robusto com endpoints para registro (`POST /api/auth/register`) e login (`POST /api/auth/login`).
+    * A segurança das senhas é garantida pelo uso da biblioteca `bcryptjs` para a geração de hashes.
+    * A gestão de sessões é realizada através de **JSON Web Tokens (JWT)**, emitidos no login e validados a cada requisição a rotas protegidas.
+    * Um **middleware** de autorização (`protect`) foi criado para proteger os endpoints, garantindo que apenas usuários autenticados possam acessar e manipular recursos restritos.
+
+* **Gerenciamento de Reservas:**
+    * Desenvolvimento de uma API completa para o ciclo de vida das reservas.
+    * **Endpoints de Leitura:** `GET /api/reservations/active` e `GET /api/reservations/past` para consultar as reservas ativas e o histórico do usuário autenticado.
+    * **Endpoint de Escrita:** `POST /api/reservations` para a criação de novas reservas, com lógica de prevenção de conflitos (double-booking) implementada diretamente no banco de dados através de constraints de unicidade.
+    * **Endpoint de Modificação:** `PATCH /api/reservations/:id/cancel` para o cancelamento de reservas, com verificações de segurança para assegurar que um usuário só pode cancelar suas próprias reservas ativas.
+    * **Endpoint de Disponibilidade:** `GET /api/reservations/availability` para fornecer dados em tempo real sobre a ocupação de uma sala, alimentando a lógica de interatividade do calendário no frontend.
+
+---
+#### **Implementação do Frontend e Interface do Usuário (UI/UX)**
+
+O frontend foi desenvolvido com **HTML, CSS e JavaScript (Vanilla JS)**, seguindo a filosofia **Mobile-First** para assegurar uma experiência de usuário de alta qualidade em qualquer dispositivo.
+
+##### **Design e Identidade Visual**
+* A interface adota um design system consistente, utilizando a paleta de cores institucional do Inteli (roxo, vermelho/laranja e branco) em um tema claro e profissional.
+* A tipografia, baseada na fonte "Poppins", e o uso de elementos visuais como cantos arredondados, sombras sutis e animações de transição conferem à aplicação uma estética moderna e coesa.
+
+##### **Estrutura de Páginas e Fluxo de Navegação**
+
+O fluxo de navegação foi projetado para ser intuitivo, com telas claramente definidas para cada etapa da jornada do usuário.
+
+* **Página de Autenticação**
+    * Apresenta uma interface unificada para **Login** e **Cadastro**. Os formulários são alternados dinamicamente via JavaScript, proporcionando uma experiência de acesso ágil e contínua.
+
+   <div style="text-align: center; margin-bottom: 1em;">
+    <p style="margin-bottom: 0.3em; font-style: italic;"><strong>Figura 5</strong> – Tela de Login</p>
+    <img src="../assets/login.png" style="max-width: 100%; height: auto; margin: 0.5em 0;">
+    <p style="margin-top: 0.3em; font-size: 0.9em; font-style: italic;">
+        Fonte:Produção Autoral.
+    </p>
+</div>
+
+   <div style="text-align: center; margin-bottom: 1em;">
+    <p style="margin-bottom: 0.3em; font-style: italic;"><strong>Figura 6</strong> – Tela de Cadastro</p>
+    <img src="../assets/cadastro.png" style="max-width: 100%; height: auto; margin: 0.5em 0;">
+    <p style="margin-top: 0.3em; font-size: 0.9em; font-style: italic;">
+        Fonte:Produção Autoral.
+    </p>
+</div>
+
+* **Dashboard de Reservas**
+    * Esta é a tela principal do usuário autenticado. Nela, os dados das reservas são buscados da API e renderizados dinamicamente em duas seções distintas: **Reservas Ativas** e **Histórico de Reservas**. A interface inclui funcionalidades de Logout e um botão de ação flutuante (FAB) para a criação de novos agendamentos.
+
+<div style="text-align: center; margin-bottom: 1em;">
+    <p style="margin-bottom: 0.3em; font-style: italic;"><strong>Figura 7</strong> - Tela de Dashboard</p>
+    <img src="../assets/dashboard.png" style="max-width: 100%; height: auto; margin: 0.5em 0;">
+    <p style="margin-top: 0.3em; font-size: 0.9em; font-style: italic;">
+        Fonte:Produção Autoral.
+    </p>
+</div>
+
+* **Página de Nova Reserva**
+    * Interface interativa e guiada para o processo de agendamento. A página é composta por três componentes principais que são ativados sequencialmente:
+        1.  **Carrossel de Salas:** Uma lista horizontal de cards visuais para a seleção da sala.
+        2.  **Calendário Dinâmico:** Um componente de calendário que, após a seleção de uma sala, busca e exibe visualmente os dias com lotação esgotada.
+        3.  **Seleção de Horários:** Cards interativos com os blocos de horário, habilitados após a escolha de uma data válida.
+
+<div style="text-align: center; margin-bottom: 1em;">
+    <p style="margin-bottom: 0.3em; font-style: italic;"><strong>Figura 8</strong> – Tela de novas reservas</p>
+    <img src="../assets/reserva.png" style="max-width: 100%; height: auto; margin: 0.5em 0;">
+    <p style="margin-top: 0.3em; font-size: 0.9em; font-style: italic;">
+        Fonte:Produção Autoral.
+    </p>
+</div>
 ---
 
 ## <a name="c4"></a>4. Desenvolvimento da Aplicação Web (Semana 8)
